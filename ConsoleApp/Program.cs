@@ -11,7 +11,7 @@ namespace ConsoleApp
         /* 1. User modeli yaradın, Id, Name, Surname və Age propertyləri olsun.Daha sonra başqa class daxilində
         parameter olaraq List qəbul edən və geriyə userlərə aid unikal yaşların siyahısını qaytaran metod yazın
         və metodu main metodu daxilində çağırıb nəticəni ekrana yazdırın.*/
-        static void Main(string[] args)
+        /* static void Main(string[] args)
         {
             List<User> users = new List<User>();
 
@@ -81,6 +81,47 @@ namespace ConsoleApp
             {
                 Console.WriteLine(a);
             }
+        }
+        */
+
+
+
+        /*2. Metod yazın, metod istənilən sayda int qəbul edə bilər və qəbul etdiyi ədədlərin cəmini
+             return edəcək. Metodu çağırın və nəticəni ekrana yazdırın. */
+        static int Params(params int[] args)
+        {
+            int sum = 0;
+            foreach (int i in args)
+            {
+                sum += i;
+            }
+            Console.WriteLine("Result: " + sum);
+            return sum;
+
+        }
+
+        static void Main()
+        {
+            List<int> numbers = new List<int>();
+            bool w = true;
+            while (w)
+            {
+            Console.WriteLine("Enter inumber. If you want to exit write 'exit'");
+                string value = Console.ReadLine();
+                if (value.ToLower() == "exit")
+                {
+                    break;
+                }
+                if (int.TryParse(value, out int num))
+                {
+                    numbers.Add(num);
+                }
+                else
+                {
+                    Console.WriteLine("Invalid number. Please enter a valid number.");
+                }
+            }
+            Params(numbers.ToArray());
         }
     }
 }
