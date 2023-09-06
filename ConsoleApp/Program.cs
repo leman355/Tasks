@@ -180,7 +180,7 @@ namespace ConsoleApp
 
         //4. OOP principlərinə aid real nümunələr implement edin.
 
-        static void Main()
+        /*static void Main()
         {
             Console.WriteLine("Enter account holder name: ");
             string name = Console.ReadLine();
@@ -221,6 +221,89 @@ namespace ConsoleApp
             SavingsAccount account = new SavingsAccount(name, accnum, balance, intrate);
             decimal interestAmount = account.CalculateInterest();
             Console.WriteLine($"Interest Amount: ${interestAmount}");
+        }*/
+
+        
+        /*5. Dictionary yaradın, key-i GUİD və value-su List obyekti olsun (Id, name, surname, age). Daha sonra dictionary-ə 
+             10 element əlavə edin və sonda dictionary-də yaşları eyni olan userləri eyni strukturlu başqa bir dictionary-ə
+             yığın, dictionary-nin key-i yaş, value-su isə həmən yaşdakı userlər olacaq.*/
+    
+        static void Main()
+        {
+            Dictionary<Guid, User> userDict = new Dictionary<Guid, User>();
+            bool w = true;
+            int id = 1;
+
+            while (w)
+            {
+                Console.WriteLine("Enter Name:");
+                string name = Console.ReadLine();
+                Console.WriteLine("Enter Surname:");
+                string sname = Console.ReadLine();
+                Console.WriteLine("Enter age:");
+
+                int age;
+                while (true)
+                {
+                    if (!int.TryParse(Console.ReadLine(), out age))
+                    {
+                        Console.WriteLine("Invalid age. Please enter a valid number.");
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+
+                User newUser = new User
+                {
+                    Id = id,
+                    Name = name,
+                    Surname = sname,
+                    Age = age,
+                };
+
+                Guid userGuid = Guid.NewGuid();
+                userDict[userGuid] = newUser;
+                id++;
+
+                bool t = true;
+                while (t)
+                {
+                    Console.WriteLine("Do you want to leave? (yes / no)");
+                    string leave = Console.ReadLine().ToLower();
+                    if (leave == "yes")
+                    {
+                        Console.WriteLine("Stopping...");
+                        w = false;
+                        break;
+                    }
+                    else if (leave == "no")
+                    {
+                        Console.WriteLine("Continuing...");
+                        t = false;
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid input. Please enter 'yes' or 'no'.");
+                    }
+                }
+            }
+
+            var filteredGroups = userDict.Values.GroupBy(u => u.Age)
+                .Where(g => g.Count() > 1)
+                .ToDictionary(g => g.Key, g => g.ToList());
+
+            foreach (var ageGroup in filteredGroups)
+            {
+                Console.WriteLine($"Users with age {ageGroup.Key}:");
+                foreach (var user in ageGroup.Value)
+                {
+                    Console.WriteLine($"Id: {user.Id}, Name: {user.Name}, Surname: {user.Surname}");
+                }
+                Console.WriteLine();
+            }
         }
     }
 }
