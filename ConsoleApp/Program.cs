@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Net.Http.Headers;
+using System.Numerics;
 using System.Reflection;
 using System.Reflection.Metadata;
 using System.Security.Cryptography;
@@ -127,52 +128,99 @@ namespace ConsoleApp
 
         /*3. LinkedList yaradın və 10 dəyər əlavə edin.Daha sonra Console readline ilə int 
              dəyər əldə edin və linkedlist daxilində bu ədəddən sonrakı ədədi ekrana yazdırın.*/
+        /* static void Main()
+         {
+             LinkedList<int> linkedList = new LinkedList<int>();
+             Console.WriteLine("Enter 10 numbers");
+             int num;
+             for (int i = 0; i < 10; i++)
+             {
+                 Console.WriteLine($"Enter {i + 1} number");
+
+                 string val = Console.ReadLine();
+                 if (int.TryParse(val, out num))
+                 {
+                     linkedList.AddLast(num);
+                 }
+                 else
+                 {
+                     Console.WriteLine("Invalid number. Please enter a valid number.");
+                     i--;
+                 }
+             }
+             Console.WriteLine("Enter any number");
+             int n = int.Parse(Console.ReadLine());
+             LinkedListNode<int> node = linkedList.Find(n);
+
+             if (node != null)
+             {
+                 LinkedListNode<int> nextNode = node.Next;
+
+                 if (nextNode != null)
+                 {
+                     Console.WriteLine("Numbers after " + n + ":");
+                     while (nextNode != null)
+                     {
+                         Console.Write(nextNode.Value + " ");
+                         nextNode = nextNode.Next;
+                     }
+                 }
+                 else
+                 {
+                     Console.WriteLine("There are no numbers after " + n);
+                 }
+             }
+             else
+             {
+                 Console.WriteLine("The entered number was not found in the list.");
+             }
+         }*/
+
+
+
+        //4. OOP principlərinə aid real nümunələr implement edin.
+
         static void Main()
         {
-            LinkedList<int> linkedList = new LinkedList<int>();
-            Console.WriteLine("Enter 10 numbers");
-            int num;
-            for (int i = 0; i < 10; i++)
+            Console.WriteLine("Enter account holder name: ");
+            string name = Console.ReadLine();
+            string accnum;
+            do
             {
-                Console.WriteLine($"Enter {i+1} number");
+                Console.WriteLine("Enter account number (16 characters): ");
+                accnum = Console.ReadLine();
+            } while (accnum.Length != 16 || string.IsNullOrWhiteSpace(accnum));
 
-                string val = Console.ReadLine();
-                if (int.TryParse(val, out num))
+            decimal balance;
+            do
+            {
+                Console.WriteLine("Enter balance: ");
+                if (!decimal.TryParse(Console.ReadLine(), out balance) || balance <= 0)
                 {
-                    linkedList.AddLast(num);
+                    Console.WriteLine("Invalid balance. Please enter a valid balance.");
                 }
                 else
                 {
-                    Console.WriteLine("Invalid number. Please enter a valid number.");
-                    i--;
+                    break;
                 }
-            }
-            Console.WriteLine("Enter any number");
-            int n =int.Parse(Console.ReadLine());
-            LinkedListNode<int> node = linkedList.Find(n);
+            } while (true);
 
-            if (node != null)
+            decimal intrate;
+            do
             {
-                LinkedListNode<int> nextNode = node.Next;
-
-                if (nextNode != null)
+                Console.WriteLine("Enter interest rate: ");
+                if (!decimal.TryParse(Console.ReadLine(), out intrate) || intrate <= 0)
                 {
-                    Console.WriteLine("Numbers after " + n + ":");
-                    while (nextNode != null)
-                    {
-                        Console.Write(nextNode.Value + " ");
-                        nextNode = nextNode.Next;
-                    }
+                    Console.WriteLine("Invalid interest rate. Please enter a valid interest rate.");
                 }
                 else
                 {
-                    Console.WriteLine("There are no numbers after " + n);
+                    break;
                 }
-            }
-            else
-            {
-                Console.WriteLine("The entered number was not found in the list.");
-            }
+            } while (true);
+            SavingsAccount account = new SavingsAccount(name, accnum, balance, intrate);
+            decimal interestAmount = account.CalculateInterest();
+            Console.WriteLine($"Interest Amount: ${interestAmount}");
         }
     }
 }
