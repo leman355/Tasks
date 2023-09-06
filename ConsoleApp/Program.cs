@@ -228,7 +228,7 @@ namespace ConsoleApp
              10 element əlavə edin və sonda dictionary-də yaşları eyni olan userləri eyni strukturlu başqa bir dictionary-ə
              yığın, dictionary-nin key-i yaş, value-su isə həmən yaşdakı userlər olacaq.*/
     
-        static void Main()
+        /*static void Main()
         {
             Dictionary<Guid, User> userDict = new Dictionary<Guid, User>();
             bool w = true;
@@ -304,6 +304,72 @@ namespace ConsoleApp
                 }
                 Console.WriteLine();
             }
+        }*/
+
+        /*6. 2 ölçülü array yaradın, sətir və sütun sayını console readline ilə əldə edin.daha sonra array elementlərinə
+             0-10 arası random ədədlər verin və arrayın baş və köməkçi dioqanal elementləri cəminin hasilini tapın.*/
+
+        static void Main(string[] args)
+        {
+            int column;
+            while (true)
+            {
+                Console.Write("Enter the number of columns: ");
+                if (!int.TryParse(Console.ReadLine(), out column))
+                {
+                    Console.WriteLine("Invalid number. Please enter a valid number.");
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            int row;
+            while (true)
+            {
+                Console.Write("Enter the number of rows: ");
+                if (!int.TryParse(Console.ReadLine(), out row))
+                {
+                    Console.WriteLine("Invalid number. Please enter a valid number.");
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            int[,] matrix = new int[column, row];
+            Random rnd = new Random();
+
+            for (int i = 0; i < column; i++)
+            {
+                for (int j = 0; j < row; j++)
+                {
+                    matrix[i, j] = rnd.Next(0, 11);
+                }
+            }
+
+            Console.WriteLine("Matrix:");
+            for (int i = 0; i < column; i++)
+            {
+                for (int j = 0; j < row; j++)
+                {
+                    Console.Write(matrix[i, j] + "\t");
+                }
+                Console.WriteLine();
+            }
+
+            int main = 1;
+            int minor = 1;
+
+            for (int i = 0; i < column; i++)
+            {
+                main *= matrix[i, i];
+                minor *= matrix[i, row - 1 - i];
+            }
+            Console.WriteLine("\nMultiplying elements by main diagonal: " + main);
+            Console.WriteLine("Multiplying elements by minor diagonal: " + minor);
         }
     }
 }
