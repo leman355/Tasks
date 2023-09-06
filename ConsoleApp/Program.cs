@@ -291,11 +291,11 @@ namespace ConsoleApp
                 }
             }
 
-            var filteredGroups = userDict.Values.GroupBy(u => u.Age)
+             Dictionary<int, List<User>> usersByAge = userDict.Values.GroupBy(u => u.Age)
                 .Where(g => g.Count() > 1)
                 .ToDictionary(g => g.Key, g => g.ToList());
 
-            foreach (var ageGroup in filteredGroups)
+            foreach (var ageGroup in usersByAge)
             {
                 Console.WriteLine($"Users with age {ageGroup.Key}:");
                 foreach (var user in ageGroup.Value)
